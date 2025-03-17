@@ -1,7 +1,8 @@
-from django.shortcuts import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.shortcuts import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect, render
 from django.http import HttpRequest, JsonResponse
 from random import randint as r
 from django.core.serializers.json import DjangoJSONEncoder
+# from django.template.response import TemplateResponse
 # Create your views here.
 
 class Worker:
@@ -15,9 +16,11 @@ class WorkerEncoder(DjangoJSONEncoder):
             return {"name": obj.name, "id": obj.id}
         
         return super().default(obj)
-
+    
 def index(request: HttpRequest):
-    return HttpResponse("privet mir!!!")
+    worker = Worker("Ivan")
+    data = {"header": "Hello Django, privet lisa", "message": "my first template", "worker": worker}
+    return render(request, "index.html", context=data)
 
 def about(request: HttpRequest):
     host = request.META["HTTP_HOST"]
@@ -66,4 +69,3 @@ def set_cck(request: HttpRequest):
 def get_cck(request: HttpRequest):
     username = request.COOKIES["username"]
     return HttpResponse(f"Ты получил свои куки {username}")
-

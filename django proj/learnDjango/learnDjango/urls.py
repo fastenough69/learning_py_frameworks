@@ -28,7 +28,7 @@ products_patt = [path('', views.products),
 
 
 urlpatterns = [
-    path('', views.index),
+    path("", views.index),
     re_path(r"^about", views.about),
     path('help', views.help),
     path("user", views.user),
